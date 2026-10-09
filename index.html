@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Poetic Timeline | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --timeline-line: #1e293b;
+            --card-bg: #131a26;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #d97706;
+            --accent-hover: #b45309;
+            --sticker-bg: rgba(217, 119, 6, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.6;
+            padding: 40px 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Moving Attractive Stickers / Floating Elements */
+        .floating-sticker {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            font-size: 2rem;
+            animation: floatAround 12s ease-in-out infinite alternate;
+            opacity: 0.6;
+            filter: drop-shadow(0 0 8px var(--accent));
+        }
+        .sticker-1 { top: 15%; left: 5%; animation-duration: 14s; }
+        .sticker-2 { top: 65%; right: 6%; animation-duration: 18s; animation-delay: 2s; }
+        .sticker-3 { top: 40%; left: 85%; animation-duration: 10s; }
+
+        @keyframes floatAround {
+            0% { transform: translateY(0) rotate(0deg) scale(1); }
+            50% { transform: translateY(-20px) rotate(15deg) scale(1.1); }
+            100% { transform: translateY(10px) rotate(-10deg) scale(0.9); }
+        }
+
+        /* Header / Profile Info Grid */
+        .profile-container {
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .avatar-frame {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 20px auto;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 20px rgba(217, 119, 6, 0.3);
+            /* Sample GIF placeholder animation */
+            animation: pulseGlow 4s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(217, 119, 6, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(217, 119, 6, 0.6); }
+        }
+
+        .profile-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile-bio {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Beautiful Thoughts / Musings Section */
+        .thoughts-banner {
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            background: linear-gradient(135deg, #1e1b4b, #131a26);
+            border-left: 4px solid var(--accent);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .thoughts-banner h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .thoughts-banner p {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #e2e8f0;
+        }
+
+        /* Timeline Wrapper */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-left: 30px;
+        }
+
+        /* Central spine line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 10px;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--timeline-line);
+        }
+
+        /* Timeline Nodes */
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        /* Node Bullet */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -36px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--bg-color);
+            border: 3px solid var(--accent);
+            z-index: 2;
+            box-shadow: 0 0 8px var(--accent);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover::before {
+            background-color: var(--accent);
+            transform: scale(1.3);
+        }
+
+        .timeline-meta {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 8px;
+        }
+
+        /* Poem Container Card */
+        .poem-card {
+            background-color: var(--card-bg);
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .poem-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(217, 119, 6, 0.05);
+            border-color: rgba(217, 119, 6, 0.3);
+        }
+
+        .poem-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        /* Interactive Language Selector Tabs */
+        .tab-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #1e293b;
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 6px 16px;
+            border-radius: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .tab-btn:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            background-color: var(--accent);
+        }
+
+        /* Poem Content Typography Block */
+        .poem-content {
+            font-family: 'Lora', serif;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+            white-space: pre-wrap; /* Maintains stanzas and spaces properly */
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .poem-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Multimedia Audio Player Design */
+        .audio-player-wrapper {
+            background-color: rgba(15, 23, 42, 0.6);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #1e293b;
+        }
+
+        .audio-player-wrapper audio {
+            width: 100%;
+            height: 36px;
+            outline: none;
+        }
+
+        /* Customizing generic browser audio look cleanly via filters */
+        audio::-webkit-media-controls-panel {
+            background-color: #131a26;
+        }
+
+        .audio-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-title { font-size: 2rem; }
+            .poem-card { padding: 20px; }
+            .timeline { padding-left: 20px; }
+            .timeline-item::before { left: -26px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Moving Stickers (Aesthetic Layer) -->
+    <div class="floating-sticker sticker-1">✨</div>
+    <div class="floating-sticker sticker-2">✒️</div>
+    <div class="floating-sticker sticker-3">🌌</div>
+
+    <!-- Header / Bio Frame -->
+    <header class="profile-container">
+        <div class="avatar-frame">
+            <!-- Replace src with your animated profile photo / GIF -->
+            <img class="avatar" src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=150&auto=format&fit=crop&q=80" alt="Animated Profile Art">
+        </div>
+        <h1 class="profile-title">Aarti Kaushik</h1>
+        <p class="profile-bio">A bilingual rhythmic archive wandering through paths of time, ink, and sonic echoes. Transforming deep thoughts into raw metrics.</p>
+    </header>
+
+    <!-- Beautiful Thoughts / Musings Segment -->
+    <section class="thoughts-banner">
+        <h3>Thought of the day / मन की बात</h3>
+        <p>"Ink doesn't just fill pages; it gives a dimension to the silent voids we carry inside our chests." / "स्याही सिर्फ पन्नों को नहीं भरती, यह उन खामोश शून्यों को एक नया आयाम देती है जिन्हें हम समेटे फिरते हैं।"</p>
+    </section>
+
+    <!-- Main Timeline -->
+    <main class="timeline">
+
+        <!-- Poem Entry 1 -->
+        <article class="timeline-item">
+            <div class="timeline-meta">October 2026 </div>
+            <div class="poem-card">
+                <h2 class="poem-title">Dear Jindagi/हे ज़िंदगी!</h2>
+                
+                <!-- Interactive Tabs Toggle -->
+                <div class="tab-container">
+                    <button class="tab-btn active" onclick="switchLanguage(this, 'poem1-en')">English</button>
+                    <button class="tab-btn" onclick="switchLanguage(this, 'poem1-hi')">हिंदी</button>
+                </div>
+                     <!-- English Stanza Variant -->
+                <div id="poem1-en" class="poem-content active">
+Hey Jindagi! tera alfaj karun main,
+bhaut shikayat hai duniya ko tujhse,
+kya ek aur shikayat aaj karun main... 
+
+Tu to hansati bhi hai khush krati bhi hai,
+par teri dua us kismat ko mil jati hai,
+dukh aate hi tujhe chod chale jate hai,
+kya ek bar bhi sochte jo tujhse muh mod jate h... 
+
+Tu to harati bhi hai, jitati bhi hai,
+sikhati bhi hai aur sanjhati bhi hai,
+rulati bhi hai magar manati bhi hai ,
+tujhe sartaj khun main, ustad kahun main,
+hey jindagi! tera shukriya aaj karun main... 
+                              
+                                                    Itra Kauskik
+                </div>
+                 <!-- Hindi Stanza Variant -->
+                <div id="poem1-hi" class="poem-content">
+हे ज़िंदगी! तेरा अल्फ़ाज़ करूँ मैं,
+बहुत शिकायत है दुनिया को तुझसे,
+क्या एक और शिकायत आज करूँ मैं...
+    
+तू तो हँसाती भी है खुश कराती भी है,
+पर तेरी दुआ उस किस्मत को मिल जाती है,
+दुख आते ही तुझे छोड़ चले जाते हैं,
+क्या एक बार भी सोचते जो तुझसे मुँह मोड़ जाते हैं...
+                    
+तू तो हराती भी है, जिताती भी है,
+सिखाती भी है और समझाती भी है,
+रुलाती भी है मगर मनाती भी है,
+तुझे सरताज कहूँ मैं, उस्ताद कहूँ मैं,
+हे ज़िंदगी! तेरा शुक्रिया आज करूँ मैं...
+                                        
+                                        Itra Kaushik
+                </div>
+
+                <!-- Integrated Audio Player Segment -->
+             
+            </div>
+        </article>
+        <!-- Poem Entry 2 -->
+        <article class="timeline-item">
+            <div class="timeline-meta">October 2026 </div>
+            <div class="poem-card">
+                <h2 class="poem-title">E Kalam!/ऐ कलम!</h2>
+                
+                <div class="tab-container">
+                    <button class="tab-btn active" onclick="switchLanguage(this, 'poem2-en')">English</button>
+                    <button class="tab-btn" onclick="switchLanguage(this, 'poem2-hi')">हिंदी</button>
+                </div>
+
+                <div id="poem2-en" class="poem-content active">
+Is tang samaj ki galiyon se ,
+nikalna mujhe sikha diya,
+E kalam! kya jadu kiya,
+matwala mujhe bna diya... 
+
+agar karke khta aaun main ,
+maa aanchal sa tujhe bna liya,
+na dant mile fatkar mile,
+E kalam! vo guru tujhe hai bna liya... 
+
+Man mein hai chanchalta sang santwana,
+sparsh darpan sa tujhe hai maan liya,
+na ho khatam aur na bhare,
+vo samandar lahron se apni jag gya... 
+
+Dhanay hai vo guru,
+jisne ye skha mujhe h daan diya,
+E kalam! main tujhe kya kya kahun,
+tune to mujhko khud se mila diya... 
+                                          
+                                            Itra Kaushik
+                </div>
+                
+                <div id="poem2-hi" class="poem-content">                  
+इस तंग समझ की गलियों से,
+निकलना मुझे सिखा दिया,
+ऐ कलम! क्या जादू किया,
+मतवाला मुझे बना दिया...
+    
+अगर करके खता आऊँ मैं,
+माँ आँचल सा तुझे बना लिया,
+ना डाँट मिले फटकार मिले,
+ऐ कलम! वो गुरु तुझे है बना लिया...
+    
+मन में है चंचलता संग सांत्वना,
+स्पर्श दर्पण सा तुझे है मान लिया,
+ना हो खत्म और ना भरे,
+वो समंदर लहरों से अपनी जाग गया...
+    
+धन्य है वो गुरु,
+जिसने ये सीख मुझे है दान दिया,
+ऐ कलम! मैं तुझे क्या क्या कहूँ,
+तूने तो मुझको खुद से मिला दिया...
+
+                         Itra Kaushik
+                </div>
+                  
+            </div>
+        </article>
+        <!-- Poem Entry 3-->
+        <article class="timeline-item">
+            <div class="timeline-meta">October 2026 </div>
+            <div class="poem-card">
+                <h2 class="poem-title">Dor ek esi bhi/डोर एक ऐसी भी</h2>
+                
+                <div class="tab-container">
+                    <button class="tab-btn active" onclick="switchLanguage(this, 'poem3-en')">English</button>
+                    <button class="tab-btn" onclick="switchLanguage(this, 'poem3-hi')">हिंदी</button>
+                </div>
+
+                <div id="poem3-en" class="poem-content active">
+E insaan main to dra,
+uss dor ke farman se,
+tu to lga raha bediyan mujhe,
+uss man maryada swabhiman se... 
+
+Main tuchh na aadi hun,
+uss chhal dambh dvesh prahar se,
+na hi vakif hun main ,
+band jaal naal,uss tang singh khaal se... 
+
+Kar agar mujhe tu riha de ,
+uss jimmedari bhri ummidon ki shila se,
+jaag jaun main unn khwabon ko tyaag,
+uss swapan bhare jhan mein... 
+
+                                     Itra Kaushik
+
+                </div>
+                
+                <div id="poem3-hi" class="poem-content">                  
+ऐ इंसान मैं तो डरा,
+उस डोर के फ़रमान से,
+तू तो लगा रहा बेड़ियाँ मुझे,
+उस मान-मर्यादा स्वाभिमान से...
+
+मैं तुच्छ ना आदि हूँ,
+उस छल-दंभ-द्वेष प्रहार से,
+ना ही वाकिफ़ हूँ मैं,
+बंद जाल-नाल, उस तंग सिंह-खाल से...
+
+कर अगर मुझे तू रिहा दे,
+उस ज़िम्मेदारी भरी उम्मीदों की शिला से,
+जाग जाऊँ मैं उन ख़्वाबों को त्याग,
+उस स्वप्न भरे जहान में...
+
+             Itra Kaushik
+                </div>
+                
+            </div>
+        </article>
+<!-- Poem Entry 4-->
+        <article class="timeline-item">
+            <div class="timeline-meta">October 2026 </div>
+            <div class="poem-card">
+                <h2 class="poem-title">Haar/हार</h2>
+                
+                <div class="tab-container">
+                    <button class="tab-btn active" onclick="switchLanguage(this, 'poem4-en')">English</button>
+                    <button class="tab-btn" onclick="switchLanguage(this, 'poem4-hi')">हिंदी</button>
+                </div>
+
+                <div id="poem4-en" class="poem-content active">
+Haar ek prahar nahi,
+haar ek hathiyar hai,
+kar punah prarambh aadi se,
+ya nye khule dwaar hai... 
+
+Kya maang kare uss daan ki,
+tu to ho chuka taiyar hai,
+uncha uth aur mud kar dekh,
+tujhe mila atal uphar hai... 
+
+Haar ek kurupta nahi,
+haar to shringar hai,
+haar ek prahar nahi,
+haar ek hathiyar hai,
+kar punah prarambh aadi se,
+ya nye khule dwaar hai... 
+                 
+                              Itra Kaushik
+
+                </div>
+
+
+                <div id="poem4-hi" class="poem-content">                  
+हार एक प्रहार नहीं,
+हार एक हथियार है,
+कर पुनः प्रारंभ आदि से,
+या नए खुले द्वार है...
+
+क्या माँग करे उस दान की,
+तू तो हो चुका तैयार है,
+ऊँचा उठ और मुड़ कर देख,
+तुझे मिला अटल उपहार है...
+
+हार एक कुरूपता नहीं,
+हार तो श्रृंगार है,
+हार एक प्रहार नहीं,
+हार एक हथियार है,
+कर पुनः प्रारंभ आदि से,
+या नए खुले द्वार है...
+
+          Itra Kaushik
+                </div>
+               
+            </div>
+        </article><!-- Poem Entry 5-->
+        <article class="timeline-item">
+            <div class="timeline-meta">October 2026 </div>
+            <div class="poem-card">
+                <h2 class="poem-title">Tera Itrana/तेरा इतराना</h2>
+                
+                <div class="tab-container">
+                    <button class="tab-btn active" onclick="switchLanguage(this, 'poem5-en')">English</button>
+                    <button class="tab-btn" onclick="switchLanguage(this, 'poem5-hi')">हिंदी</button>
+                </div>
+
+                <div id="poem5-en" class="poem-content active">
+Hey jindgi tu kyun itna itrati hai,
+tinka-tinka bunti main,
+kyun har bar bikhra jaati hai,
+hey jingdi tu kyun itna itrati hai... 
+
+Ek laghu samay antraal main,
+kala ghana tufaaan ched jaati hai,
+itna ghana! na dikhe kuchh,
+vo andhkaar bikher jaati hai,
+hey jingdi tu kyun itna itrati hai...
+
+Dikhta hai sahi par hota nahi,
+na naav kinare jaati hai,
+jo raah sahi uss mod leyi,
+par der badi ho jaati hai,
+hey jingdi tu kyun itna itrati hai...
+
+Itna khel chuke hum saath,
+nye khel khan se laati hai,
+yaa tu dhurt, ya main saral,
+teri chaal samajh nahi aati hai,
+hey jingdi tu kyun itna itrati hai...
+
+Ab jo sikh gai main uthna,
+tu jitni baar mujhe girati hai,
+chod de paryas karna,
+ab to dya tujhi pe aati hai,
+hey jingdi tu kyun itna itrati hai...
+
+                                    Itra Kaushik
+
+                </div>
+
+                <div id="poem5-hi" class="poem-content">  
+हे ज़िंदगी तू क्यों इतना इतराती है,
+तिनका-तिनका बुनती मैं,
+क्यों हर बार बिखरा जाती है,
+हे ज़िंदगी तू क्यों इतना इतराती है...
+
+एक लघु समय अंतराल में,
+काला घना तूफ़ान छेड़ जाती है,
+इतना घना! ना दिखे कुछ,
+वो अंधकार बिखेर जाती है,
+हे ज़िंदगी तू क्यों इतना इतराती है...
+
+दिखता है सही पर होता नहीं,
+ना नाव किनारे जाती है,
+जो राह सही उस मोड़ लेयी,
+पर देर बड़ी हो जाती है,
+हे ज़िंदगी तू क्यों इतना इतराती है...
+
+इतना खेल चुके हम साथ,
+नए खेल कहाँ से लाती है,
+या तू धूर्त, या मैं सरल,
+तेरी चाल समझ नहीं आती है,
+हे ज़िंदगी तू क्यों इतना इतराती है...
+
+अब जो सीख गई मैं उठना,
+तू जितनी बार मुझे गिराती है,
+छोड़ दे प्रयास करना,
+अब तो दया तुझी पे आती है,
+हे ज़िंदगी तू क्यों इतना इतराती है...   
+
+                 Itra Kaushik
+
+              
+        </article>
+
+    
+
+    </main>
+            <script>
+        function switchLanguage(button, targetId) {
+            // Find the immediate card wrapper context
+            const card = button.closest('.poem-card');
+            
+            // Deactivate all tab buttons inside this card
+            const buttons = card.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Hide all poem content divs inside this card
+            const contents = card.querySelectorAll('.poem-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Activate clicked button and target translation content
+            button.classList.add('active');
+            card.querySelector('#' + targetId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
